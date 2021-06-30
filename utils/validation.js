@@ -33,7 +33,7 @@ exports.validate = [
         .withMessage('Enter your age properly')
         .bail(),
 
-        check('DOB')
+    check('DOB')
         .trim()
         .not()
         .isEmpty()
@@ -72,10 +72,12 @@ exports.validate = [
         .withMessage('Password is to short')
         .bail(),
 
-  
 
 
-        (req, res, next)=> {
 
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) res.status(422).json({ errors: errors.array() });
+        next()
     }
 ]
